@@ -1,0 +1,19 @@
+Prefix: '&4&lBattleRoyale&c» §7'
+PlayersToStart: 5
+Phases: 6
+TimeBetweenPhases: 150
+Maps:
+    City:
+        MaxX: -112
+        MaxZ: 682
+        MinX: -813
+        MinZ: -18
+        World: City
+        CenterX: -462
+        CenterZ: 332
+SQL:
+    Host: 'localhost'
+    Port: 3306
+    Database: 'database'
+    User: 'user'
+    Pass: 'pass'

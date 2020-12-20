@@ -1,0 +1,9 @@
+name: BattleRoyale
+description: Plugin created by NiX Development
+author: NiX3r
+website: https://www.spigotmc.org/members/nixicz.468770/
+main: cz.nixdevelopment.br.BattleRoyale
+version: 1.12.2
+commands:
+    br:
+        description: all commands're here
