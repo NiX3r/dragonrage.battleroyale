@@ -8,12 +8,12 @@ import cz.nixdevelopment.br.utils.GameUtil;
 
 public class CountdownScheduler {
 
-    private static int taskID;
+    private static int taskID2;
     
     public static void CountDown() {
         
         
-        taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(BattleRoyale.inst, new Runnable() {
+        taskID2 = Bukkit.getScheduler().scheduleSyncRepeatingTask(BattleRoyale.inst, new Runnable() {
 
             int index = 60;
             
@@ -75,7 +75,7 @@ public class CountdownScheduler {
     
     private static void StopWatch() {
         
-        Bukkit.getScheduler().cancelTask(taskID);
+        Bukkit.getScheduler().cancelTask(taskID2);
         if(BattleRoyale.GameInfo().IsGameReady()) {
             GameUtil.ForceStartGame();
         }

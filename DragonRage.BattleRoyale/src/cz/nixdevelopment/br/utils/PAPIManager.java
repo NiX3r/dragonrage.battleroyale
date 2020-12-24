@@ -1,5 +1,7 @@
 package cz.nixdevelopment.br.utils;
 
+import java.text.DecimalFormat;
+
 import org.bukkit.entity.Player;
 
 import cz.nixdevelopment.br.BattleRoyale;
@@ -38,7 +40,8 @@ public class PAPIManager extends PlaceholderExpansion{
             return String.valueOf(BattleRoyale.GetGamePlayers().GetPlayer(p.getUniqueId()).GetDeaths());
         }
         else if(identifier.equals("kdratio")) {
-            return String.valueOf((double) BattleRoyale.GetGamePlayers().GetPlayer(p.getUniqueId()).GetKills() / (double) BattleRoyale.GetGamePlayers().GetPlayer(p.getUniqueId()).GetKills());
+            DecimalFormat df = new DecimalFormat("#.##");
+            return String.valueOf(df.format((double) BattleRoyale.GetGamePlayers().GetPlayer(p.getUniqueId()).GetKills() / (double) BattleRoyale.GetGamePlayers().GetPlayer(p.getUniqueId()).GetDeaths()));
         }
         else if(identifier.equals("wins")) {
             return String.valueOf(BattleRoyale.GetGamePlayers().GetPlayer(p.getUniqueId()).GetWins());
@@ -47,7 +50,8 @@ public class PAPIManager extends PlaceholderExpansion{
             return String.valueOf(BattleRoyale.GetGamePlayers().GetPlayer(p.getUniqueId()).GetLoses());
         }
         else if(identifier.equals("wlratio")) {
-            return String.valueOf((double) BattleRoyale.GetGamePlayers().GetPlayer(p.getUniqueId()).GetWins() / (double) BattleRoyale.GetGamePlayers().GetPlayer(p.getUniqueId()).GetLoses());
+            DecimalFormat df = new DecimalFormat("#.##");
+            return String.valueOf(df.format((double) BattleRoyale.GetGamePlayers().GetPlayer(p.getUniqueId()).GetWins() / (double) BattleRoyale.GetGamePlayers().GetPlayer(p.getUniqueId()).GetLoses()));
         }
         else if(identifier.equals("plays")) {
             return String.valueOf(BattleRoyale.GetGamePlayers().GetPlayer(p.getUniqueId()).GetPlays());
@@ -79,6 +83,9 @@ public class PAPIManager extends PlaceholderExpansion{
         }
         else if(identifier.equals("left")) {
             return String.valueOf(BattleRoyale.GameInfo().GetLeft());
+        }
+        else if(identifier.equals("zone")) {
+            return String.valueOf(BattleRoyale.GetSecToNextPhase());
         }
         else {
             return "InvalidIdentifier";

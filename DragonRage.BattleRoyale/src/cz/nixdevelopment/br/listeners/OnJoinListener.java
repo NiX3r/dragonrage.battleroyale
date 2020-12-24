@@ -18,8 +18,11 @@ public class OnJoinListener implements Listener {
         
         MySQL.CheckPlayerExists(event.getPlayer().getUniqueId().toString(), event.getPlayer().getName());
         BattleRoyale.GetGamePlayers().AddGamePlayer(event.getPlayer());
-
-        if(!BattleRoyale.GameInfo().IsGameActive() && !BattleRoyale.GameInfo().IsGameReady()) {
+        
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spawn " + event.getPlayer().getName());
+        BattleRoyale.GetGamePlayers().ResetInventory(event.getPlayer().getName());
+        
+        if(!BattleRoyale.GameInfo().IsGameActive()) {
             BattleRoyale.GameInfo().SetTotal(BattleRoyale.GameInfo().GetTotal() + 1);
             Bukkit.broadcastMessage(Messages.PlayerJoin(event.getPlayer().getName(), BattleRoyale.GameInfo().GetTotal(), BattleRoyale.MinimumPlayersToStartGame()));
             if(BattleRoyale.GameInfo().GetTotal() == BattleRoyale.MinimumPlayersToStartGame()) {

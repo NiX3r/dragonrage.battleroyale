@@ -47,16 +47,41 @@ public class InGamePlayersInstance {
         
         for(PlayerInstance pi : this.players) {
             
-            int x, y = -1, z;
+            int x = 0, y = -1, z = 0;
             
-            x = ThreadLocalRandom.current().nextInt(map.GetMinX(), map.GetMaxX());
-            y = 255;
-            z = ThreadLocalRandom.current().nextInt(map.GetMinZ(), map.GetMaxZ());
+            while(y == -1) {
+                x = ThreadLocalRandom.current().nextInt(map.GetMinX() +50, map.GetMaxX() -50);
+                z = ThreadLocalRandom.current().nextInt(map.GetMinZ() +50, map.GetMaxZ() -50);
+                y = GetY(map.GetWorld(), x, z);
+                Bukkit.broadcastMessage("X:" + x + " Y:" + y + " Z:" + z);
+            }
             
-            
-            Bukkit.getPlayer(pi.GetNick()).teleport(new Location(Bukkit.getWorld(map.GetWorld()), Double.valueOf(String.valueOf(x)), Double.valueOf(String.valueOf(y)), Double.valueOf(String.valueOf(z))));
+            Bukkit.getPlayer(pi.GetNick()).teleport(new Location(Bukkit.getWorld(map.GetWorld()), x, y, z));
             
         }
+        
+    }
+    
+    private int GetY(String world, int x, int z) {
+        
+        for(int i = 255; i > -1; i--) {
+            
+            Location l = new Location(Bukkit.getWorld(world), x, i, z);
+            
+            if(l.getBlock().getTypeId() != 0) {
+                
+                if(l.getBlock().getTypeId() == 8 || l.getBlock().getTypeId() == 9) {
+                    return -1;
+                }
+                else {
+                    return i;
+                }
+                
+            }
+            
+        }
+        
+        return -1;
         
     }
     
@@ -83,6 +108,7 @@ public class InGamePlayersInstance {
         
         String last = GetLastPlayer().GetNick();
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spawn " + last);
+        Bukkit.getPlayer(last).setHealth(20);
         ResetInventory(last);
         
     }

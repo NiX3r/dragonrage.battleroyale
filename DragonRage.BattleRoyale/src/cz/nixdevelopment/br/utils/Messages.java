@@ -76,6 +76,9 @@ public class Messages {
     public static String UnknownCommand() {
         return BattleRoyale.Prefix + "Neznamy prikaz! Napis: §5/br";
     }
+    public static String SomethingHappened() {
+        return BattleRoyale.Prefix + "Vyskytla neocekavana chyba! Restartuji server";
+    }
 
     public static String TargetOffline(String nick) {
         return BattleRoyale.Prefix + "Hrac " + nick + " neni online!";

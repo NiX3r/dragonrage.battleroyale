@@ -62,16 +62,20 @@ public class GameUtil {
         if(BattleRoyale.GetGamePlayers().GetLastPlayer() != null) {
             
             BattleRoyale.GetGamePlayers().GetLastPlayer().IncreaseWins();
-            
+            Boolean isSended = false;
             Player p = Bukkit.getPlayer(BattleRoyale.GetGamePlayers().GetLastPlayer().GetNick());
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "op " + p.getName());
-            Bukkit.dispatchCommand(p, "worldborder set 700");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "deop " + p.getName());
+            while(!isSended) {
+                if(p.hasPermission("minecraft.command.worldborder"))
+                    isSended = p.performCommand("worldborder set 700");
+            }
+
             
             Bukkit.broadcastMessage(Messages.WinnerWinnerChickenDinner(BattleRoyale.GetGamePlayers().GetLastPlayer().GetNick()));
             BattleRoyale.GetGamePlayers().TeleportLast();
             
             BattleRoyale.GameInfo().EndGame();
+            BattleRoyale.SetMapActual(null);
+            BattleRoyale.SetSecToNextPhase(0);
             
             if(BattleRoyale.GameInfo().IsGameReady())
                 StartGame();

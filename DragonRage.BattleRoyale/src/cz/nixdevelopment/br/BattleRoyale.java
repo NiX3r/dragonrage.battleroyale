@@ -30,7 +30,7 @@ public class BattleRoyale extends JavaPlugin{
     private static ArrayList<MapInstance> maps;
     private static MapInstance actualMap;
     private static GameInstance gameInfo;
-    private static int minimumToStart, phasesCounter, timeBetweenPhase;
+    private static int minimumToStart, phasesCounter, timeBetweenPhase, secToNextPhase = 0;
     private static Boolean isGod = false;
     
     public static JavaPlugin inst;
@@ -75,13 +75,22 @@ public class BattleRoyale extends JavaPlugin{
     public void onDisable() {
         
         if(gameInfo.IsGameActive()) {
+            Boolean set = false;
             for(Player p : Bukkit.getOnlinePlayers()) {
                 
                 if(p.getLocation().getWorld().getName().equals(actualMap.GetWorld())) {
-                    
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "op " + p.getName());
-                    Bukkit.dispatchCommand(p, "worldborder set 700");
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "deop " + p.getName());
+
+                    if(!set) {
+                        
+                        Boolean isSended = false;
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + p.getName() + " permission set minecraft.command.worldborder");
+                        while(!isSended) {
+                            if(p.hasPermission("minecraft.command.worldborder"))
+                                isSended = p.performCommand("worldborder set 700");
+                        }
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + p.getName() + " permission unset minecraft.command.worldborder");
+                        set = true;
+                    }
                     
                 }
                 
@@ -117,6 +126,13 @@ public class BattleRoyale extends JavaPlugin{
         
     }
     
+    public static int SetSecToNextPhase(int value) {
+        secToNextPhase = value;
+        return 0;
+    }
+    public static int GetSecToNextPhase() {
+        return secToNextPhase;
+    }
     public static void SetMapActual(MapInstance map) {
         actualMap = map;
     }

@@ -1,5 +1,9 @@
 package cz.nixdevelopment.br.instances;
 
+import org.bukkit.Bukkit;
+
+import cz.nixdevelopment.br.utils.Messages;
+
 public class GameInstance {
 
     private int total, left;

@@ -1,5 +1,6 @@
 package cz.nixdevelopment.br.listeners;
 
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -17,6 +18,12 @@ public class OnDamageListener implements Listener {
         if(event.getEntity() instanceof Player && BattleRoyale.GameInfo().IsGameActive() && BattleRoyale.IsPlayersGod() && event.getCause().equals(DamageCause.FALL)) {
             
             event.setCancelled(true);
+            
+        }
+        
+        if(event.getEntity() instanceof Player && BattleRoyale.GameInfo().IsGameActive()) {
+            
+            event.getEntity().getWorld().spawnParticle(Particle.HEART, event.getEntity().getLocation(), 5);
             
         }
         

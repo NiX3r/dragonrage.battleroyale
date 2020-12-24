@@ -2,10 +2,12 @@ package cz.nixdevelopment.br.schedulers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.PermissionAttachment;
 
 import cz.nixdevelopment.br.BattleRoyale;
 import cz.nixdevelopment.br.utils.GameUtil;
 import cz.nixdevelopment.br.utils.Messages;
+import net.minecraft.server.v1_12_R1.PacketPlayOutWorldBorder;
 
 public class PhaseScheduler {
 
@@ -16,14 +18,22 @@ public class PhaseScheduler {
         
         taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(BattleRoyale.inst, new Runnable() {
 
-            int phase = BattleRoyale.PhaseCounter() +1;
+            int phase = BattleRoyale.PhaseCounter();
+            int counter = BattleRoyale.TimeBetweenPhase();
+            int help = 0;
             
             @Override
             public void run() {
                 
-                if(phase == (BattleRoyale.PhaseCounter()+1)) {
-                    phase--;
-                }else {
+                counter--;
+                help = BattleRoyale.SetSecToNextPhase(counter);
+                
+                if(!BattleRoyale.GameInfo().IsGameActive())
+                    StopWatch();
+                
+                if(counter == 0) {
+                    
+                    counter = BattleRoyale.TimeBetweenPhase();
                     if(BattleRoyale.GameInfo().IsGameActive()) {
                         
                         phase--;
@@ -36,12 +46,20 @@ public class PhaseScheduler {
                             for(Player p : Bukkit.getOnlinePlayers()) {
                                 
                                 if(p.getLocation().getWorld().getName().equals(BattleRoyale.GetActualMap().GetWorld())) {
+
+                                    Boolean isSended = false;
                                     
-                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "op " + p.getName());
-                                    Bukkit.dispatchCommand(p, "worldborder add " + ((700 / BattleRoyale.PhaseCounter()) * -1) + " 30");
-                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "deop " + p.getName());
+                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + p.getName() + " permission set minecraft.command.worldborder");
+                                    
+                                    while(!isSended) {
+                                        if(p.hasPermission("minecraft.command.worldborder"))
+                                            isSended = p.performCommand("worldborder add " + ((700 / BattleRoyale.PhaseCounter()) * -1) + " 30");
+                                    }
+
+                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + p.getName() + " permission unset minecraft.command.worldborder");
                                     
                                     Bukkit.broadcastMessage(Messages.PhaseMove());
+                                    
                                     
                                     break;
                                     
@@ -55,11 +73,12 @@ public class PhaseScheduler {
                     else {
                         StopWatch();
                     }
+                    
                 }
                            
             }
         
-        },1L, 20L * BattleRoyale.TimeBetweenPhase());
+        },1L, 20L);
         
     }
     

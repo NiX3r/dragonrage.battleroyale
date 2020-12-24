@@ -26,14 +26,19 @@ public class OnLeaveListener implements Listener {
                 }
             }
         }
-        else {
+        else if(BattleRoyale.GetGamePlayers().GetPlayer(event.getPlayer().getUniqueId()).IsAlive()) {       
+            
             BattleRoyale.GetGamePlayers().GetPlayer(event.getPlayer().getUniqueId()).IncreaseDeaths();
             BattleRoyale.GetGamePlayers().GetPlayer(event.getPlayer().getUniqueId()).IncreaseLoses();
             BattleRoyale.GetGamePlayers().GetPlayer(event.getPlayer().getUniqueId()).PlayerDied();
             BattleRoyale.GetGamePlayers().ResetInventory(event.getPlayer().getName());
             BattleRoyale.GameInfo().DecrementLeft();
+            BattleRoyale.GameInfo().SetTotal(BattleRoyale.GameInfo().GetTotal() - 1);
             
             Bukkit.broadcastMessage(Messages.PlayerLeave(event.getPlayer().getName()));
+            
+            if(BattleRoyale.GameInfo().GetTotal() < BattleRoyale.MinimumPlayersToStartGame())
+                BattleRoyale.GameInfo().NotReady();
             
             if(BattleRoyale.GameInfo().GetLeft() == 1) {
                 
@@ -43,6 +48,8 @@ public class OnLeaveListener implements Listener {
         }
 
         BattleRoyale.GetGamePlayers().RemoveGamePlayer(event.getPlayer());
+        Bukkit.broadcastMessage("REMOVING PLAYER");
+        
         
     }
     

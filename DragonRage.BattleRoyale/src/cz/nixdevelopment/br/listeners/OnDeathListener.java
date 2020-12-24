@@ -19,6 +19,8 @@ public class OnDeathListener implements Listener {
         
         if(event.getEntity() instanceof Player) {
             
+            BattleRoyale.GameInfo().DecrementLeft();
+            
             if(BattleRoyale.GetGamePlayers().GetPlayer(event.getEntity().getUniqueId()).IsAlive()) {
                 
                 if(event.getEntity().getKiller() != null) {
@@ -32,8 +34,8 @@ public class OnDeathListener implements Listener {
                 BattleRoyale.GetGamePlayers().GetPlayer(event.getEntity().getUniqueId()).IncreaseDeaths();
                 BattleRoyale.GetGamePlayers().GetPlayer(event.getEntity().getUniqueId()).IncreaseLoses();
                 BattleRoyale.GetGamePlayers().GetPlayer(event.getEntity().getUniqueId()).PlayerDied();
+                
                 BattleRoyale.GetGamePlayers().ResetInventory(event.getEntity().getName());
-                BattleRoyale.GameInfo().DecrementLeft();
                 
                 if(BattleRoyale.GameInfo().GetLeft() == 1) {
                     
