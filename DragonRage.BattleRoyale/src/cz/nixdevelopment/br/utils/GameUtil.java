@@ -64,10 +64,12 @@ public class GameUtil {
             BattleRoyale.GetGamePlayers().GetLastPlayer().IncreaseWins();
             Boolean isSended = false;
             Player p = Bukkit.getPlayer(BattleRoyale.GetGamePlayers().GetLastPlayer().GetNick());
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + p.getName() + " permission set minecraft.command.worldborder");
             while(!isSended) {
                 if(p.hasPermission("minecraft.command.worldborder"))
                     isSended = p.performCommand("worldborder set 700");
             }
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + p.getName() + " permission unset minecraft.command.worldborder");
 
             
             Bukkit.broadcastMessage(Messages.WinnerWinnerChickenDinner(BattleRoyale.GetGamePlayers().GetLastPlayer().GetNick()));
