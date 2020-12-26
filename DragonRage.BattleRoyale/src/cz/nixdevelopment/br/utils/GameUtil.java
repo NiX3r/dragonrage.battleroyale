@@ -13,6 +13,7 @@ import cz.nixdevelopment.br.instances.PlayerInstance;
 import cz.nixdevelopment.br.schedulers.CountdownScheduler;
 import cz.nixdevelopment.br.schedulers.DropGodScheduler;
 import cz.nixdevelopment.br.schedulers.PhaseScheduler;
+import cz.nixdevelopment.dropsystem.DropSystem;
 
 
 public class GameUtil {
@@ -74,6 +75,8 @@ public class GameUtil {
             
             Bukkit.broadcastMessage(Messages.WinnerWinnerChickenDinner(BattleRoyale.GetGamePlayers().GetLastPlayer().GetNick()));
             BattleRoyale.GetGamePlayers().TeleportLast();
+            
+            DropSystem.RespawnChests();
             
             BattleRoyale.GameInfo().EndGame();
             BattleRoyale.SetMapActual(null);

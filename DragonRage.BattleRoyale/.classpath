@@ -4,5 +4,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/Users/nixii/Desktop/MC/servers/Local/1.12.2a/server.jar"/>
 	<classpathentry kind="lib" path="C:/Users/nixii/Desktop/MC/servers/Local/1.12.2a/plugins/PlaceholderAPI-2.10.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nixii/Desktop/MC/servers/Local/1.12.2a/plugins/DropSystem.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

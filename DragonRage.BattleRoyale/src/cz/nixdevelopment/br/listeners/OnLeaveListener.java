@@ -48,7 +48,7 @@ public class OnLeaveListener implements Listener {
         }
 
         BattleRoyale.GetGamePlayers().RemoveGamePlayer(event.getPlayer());
-        Bukkit.broadcastMessage("REMOVING PLAYER");
+        event.getPlayer().setLevel(0);
         
         
     }

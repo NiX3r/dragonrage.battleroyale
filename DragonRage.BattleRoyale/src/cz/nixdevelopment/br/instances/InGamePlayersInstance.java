@@ -53,7 +53,6 @@ public class InGamePlayersInstance {
                 x = ThreadLocalRandom.current().nextInt(map.GetMinX() +50, map.GetMaxX() -50);
                 z = ThreadLocalRandom.current().nextInt(map.GetMinZ() +50, map.GetMaxZ() -50);
                 y = GetY(map.GetWorld(), x, z);
-                Bukkit.broadcastMessage("X:" + x + " Y:" + y + " Z:" + z);
             }
             
             Bukkit.getPlayer(pi.GetNick()).teleport(new Location(Bukkit.getWorld(map.GetWorld()), x, y, z));
